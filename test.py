@@ -11,12 +11,14 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
     client_id=os.getenv('SPOTIFY_CLIENT_ID'),
     client_secret=os.getenv('SPOTIFY_CLIENT_SECRET'),
     redirect_uri="http://127.0.0.1:8888/callback",
-    scope="user-top-read"
+    scope="user-top-read user-read-currently-playing"
 ))
 
 # Call the API using Spotipy methods
 results = sp.currently_playing()
-print(results)
+
+
+"""
 if results and 'items' in results:
     top_tracks = results['items']
     print(top_tracks)
@@ -27,3 +29,12 @@ if results and 'items' in results:
         print(f'{name} by {artists}')
 else:
     print("No top tracks found or error occurred.")
+
+    """
+
+
+import json
+
+if results:
+    with open('currently_playing.json', 'w') as f:
+        json.dump(results, f, indent=4)
